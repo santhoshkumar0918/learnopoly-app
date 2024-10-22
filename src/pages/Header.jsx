@@ -88,7 +88,7 @@ const Header = () => {
               onClick={toggleMenu}
               className="hover:text-gray-300"
             >
-              More Config
+              Tech Updates
             </Link>
           </li>
           <li>

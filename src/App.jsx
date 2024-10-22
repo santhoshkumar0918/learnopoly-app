@@ -6,6 +6,8 @@ import Login from "./components/Login";
 import "./index.css";
 import Home from "./components/Home";
 import Signup from "./components/Signup";
+import Community from "./components/community";
+import Dashboard from "./components/dashboard";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </main>
       </div>

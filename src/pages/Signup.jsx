@@ -16,13 +16,12 @@ const Signup = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent page reload
-    // Handle signup logic here
+    e.preventDefault();
     console.log("Signup Data:", formData);
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500">
+    <div className="min-h-screen  flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500">
       <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg relative">
         <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
           Sign Up
