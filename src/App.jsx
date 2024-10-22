@@ -1,13 +1,13 @@
 // src/App.jsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Login from "./components/Login";
+import Login from "./pages/Login";
 import "./index.css";
-import Home from "./components/Home";
-import Signup from "./components/Signup";
-import Community from "./components/community";
-import Dashboard from "./components/dashboard";
+import Home from "./pages/Home";
+import Signup from "./pages/Signup";
+import Community from "./pages/community";
+import Dashboard from "./pages/dashboard";
+import Header from "./pages/Header";
 
 function App() {
   return (
