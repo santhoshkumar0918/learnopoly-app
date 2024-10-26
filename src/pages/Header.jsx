@@ -125,23 +125,20 @@
 
 // export default Header;
 import React, { useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa"; // Icons for hamburger and close
+import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false); // Manage the mobile menu state (open/close)
+  const [isOpen, setIsOpen] = useState(false);
 
-  // Toggle menu visibility
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
     <div className="bg-black">
-      {/* Desktop and Tablet Navigation */}
       <header className="bg-gray-900 max-w-7xl mx-auto bg-opacity-80 backdrop-blur-md shadow-lg rounded-3xl text-white fixed top-0 left-0 right-0 z-50">
         <div className="container mx-auto flex justify-between items-center h-[12vh] px-4 sm:px-6 lg:px-8">
-          {/* Logo */}
           <h1 className="text-2xl font-bold text-white">Learnopoly</h1>
 
           {/* Regular desktop navigation */}
