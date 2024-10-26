@@ -47,7 +47,6 @@ const LoginForm = () => {
   return (
     <div className="flex items-center justify-center h-screen ">
       {" "}
-      {/* Reduced height */}
       <div className="relative flex flex-col md:flex-row w-full md:w-4/5 bg-white rounded-lg shadow-lg gap-6 p-4">
         {/* Left Content Section */}
         <div
@@ -83,7 +82,6 @@ const LoginForm = () => {
             }}
           ></div>
 
-          {/* Form Title */}
           <h3 className="text-xl text-black flex justify-center font-bold mb-2">
             Login
           </h3>
