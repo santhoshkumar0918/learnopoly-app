@@ -38,7 +38,6 @@ const LoginForm = () => {
     const result = await logIn(email, password);
     if (result.success) {
       setSuccess("Login successful!");
-      // Redirect or perform any further action here
     } else {
       setError(result.error);
     }
@@ -69,7 +68,6 @@ const LoginForm = () => {
 
         {/* Right Form Section */}
         <div className="w-full md:w-2/5 bg-white p-4 ml-10 md:p-6 mb-4 mt-8 rounded-lg">
-          {/* Logo Section */}
           <div
             className="flex justify-center items-center h-16 mb-8"
             style={{
@@ -164,7 +162,6 @@ const LoginForm = () => {
               >
                 Sign in &nbsp;
                 <div className="relative flex items-center justify-center">
-                  {/* SVG Circles wrapping around the arrow */}
                   <svg
                     className="absolute w-12 h-8"
                     xmlns="http://www.w3.org/2000/svg"
