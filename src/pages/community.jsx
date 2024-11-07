@@ -1,55 +1,122 @@
-import React from "react";
 
-function community() {
-  const discussions = [
-    {
-      title: "How to dynamically get data from my GitHub account",
-      tags: ["api", "github"],
-      votes: 1,
-      answers: 80,
-      date: "6th Oct 2024, 7:39 PM",
-      user: "Hassaan",
-    },
-    {
-      title: "How to code",
-      tags: ["code"],
-      votes: 2,
-      answers: 22,
-      date: "14th Oct 2024, 7:56 PM",
-      user: "Nicolas Robledo",
-    },
-    {
-      title: "Still confused",
-      tags: ["bootstrap"],
-      votes: 4,
-      answers: 23,
-      date: "5th Oct 2024, 5:36 PM",
-      user: "Uchawsing Marma",
-    },
-    {
-      title: "Why is un2 an empty array?",
-      tags: ["array", "copy_array", "empty_array", "python"],
-      votes: 2,
-      answers: 14,
-      date: "13th Oct 2024, 4:09 PM",
-      user: "BroFar",
-    },
-  ];
+import React, { useState } from "react";
+import { db, auth } from "../firebase/firebaseConfig"; // Assuming you have firebase setup
+import { collection, addDoc } from "firebase/firestore";
+
+function Community() {
+  const [question, setQuestion] = useState("");
+  const [tags, setTags] = useState("");
+  const [isLoadingQuestion, setIsLoadingQuestion] = useState(false); 
+  const [searchTerm, setSearchTerm] = useState(""); 
+  const [discussions, setDiscussions] = useState([]);
+
+
+  const handleSearchChange = (e) => setSearchTerm(e.target.value);
+
+  // Handle change in question input
+  const handleQuestionChange = (e) => setQuestion(e.target.value);
+
+  // Handle change in tags input
+  const handleTagsChange = (e) => setTags(e.target.value);
+
+  // Handle adding question to Firestore
+  const handleAddQuestion = async () => {
+    if (!question || !tags) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    setIsLoadingQuestion(true);
+
+    try {
+      await addDoc(collection(db, "questions"), {
+        title: question,
+        tags: tags.split(",").map((tag) => tag.trim()), // Splitting and trimming tags
+        votes: 0,
+        answers: 0,
+        date: new Date().toLocaleString(),
+        user: auth.currentUser?.email || "Anonymous", // Replace with logged-in user info
+      });
+
+      // Optionally update the local state with the new question (to avoid reload)
+      setDiscussions([
+        {
+          title: question,
+          tags: tags.split(",").map((tag) => tag.trim()),
+          votes: 0,
+          answers: 0,
+          date: new Date().toLocaleString(),
+          user: auth.currentUser?.email || "Anonymous",
+        },
+        ...discussions,
+      ]);
+
+      // Clear the form after submission
+      setQuestion("");
+      setTags("");
+      alert("Question added successfully!");
+    } catch (error) {
+      console.error("Error adding question:", error.message);
+      alert("Failed to add question.");
+    } finally {
+      setIsLoadingQuestion(false);
+    }
+  };
+
+  // Filter discussions based on search term
+  const filteredDiscussions = discussions.filter((discussion) =>
+    discussion.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="p-4 bg-gray-50 min-h-screen">
       <h1 className="text-2xl font-bold mb-6">Q&A Discussions</h1>
+      
+      {/* Search Bar */}
       <div className="mb-4">
         <input
           type="text"
           placeholder="Search..."
           className="border p-2 rounded w-full max-w-md mb-2"
+          value={searchTerm}
+          onChange={handleSearchChange}
         />
-        <button className="bg-blue-500 text-white px-4 py-2 rounded">
+        <button
+          onClick={() => console.log("Ask a question clicked")}
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
           Ask a question
         </button>
       </div>
-      {discussions.map((discussion, index) => (
+
+      {/* Add Question Section */}
+      <div className="mt-6">
+        <h2 className="text-xl font-semibold mb-2">Ask a Question</h2>
+        <input
+          type="text"
+          placeholder="Your question"
+          value={question}
+          onChange={handleQuestionChange}
+          className="border p-2 rounded w-full mt-4"
+        />
+        <input
+          type="text"
+          placeholder="Tags (comma-separated)"
+          value={tags}
+          onChange={handleTagsChange}
+          className="border p-2 rounded w-full mt-4"
+        />
+        <button
+          onClick={handleAddQuestion}
+          className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+          disabled={isLoadingQuestion}
+        >
+          {isLoadingQuestion ? "Adding..." : "Add Question"}
+        </button>
+      </div>
+
+      {/* List of Discussions */}
+      {filteredDiscussions.map((discussion, index) => (
         <div key={index} className="bg-white p-4 rounded shadow mb-4">
           <div className="flex justify-between">
             <h2 className="font-semibold">{discussion.title}</h2>
@@ -75,4 +142,4 @@ function community() {
   );
 }
 
-export default community;
+export default Community;

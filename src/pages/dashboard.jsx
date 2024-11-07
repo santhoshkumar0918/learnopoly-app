@@ -1,11 +1,12 @@
-import { useState } from "react";
-import { db, auth } from "../firebase/firebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+
+import React, { useState } from "react";
 import { FaUser, FaSignOutAlt, FaSpinner } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  
+  // Mock user data (replace with actual user data from Firebase or backend)
   const [userInfo, setUserInfo] = useState({
     name: "John Doe",
     email: "john.doe@example.com",
@@ -15,11 +16,7 @@ const Dashboard = () => {
 
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false); // Loader state
-
-  const [question, setQuestion] = useState("");
-  const [tags, setTags] = useState("");
-  const [isLoadingQuestion, setIsLoadingQuestion] = useState(false); // for question submission loading state
-
+  
   // Handle changes in editable fields
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,6 +27,7 @@ const Dashboard = () => {
   const handleLogout = () => {
     setLoading(true);
     setTimeout(() => {
+      // Simulate a logout process
       navigate("/login");
       setLoading(false);
     }, 1000); // Simulate a delay
@@ -40,49 +38,11 @@ const Dashboard = () => {
     setEditing(!editing);
   };
 
-  // Handle change in question input
-  const handleQuestionChange = (e) => setQuestion(e.target.value);
-
-  // Handle change in tags input
-  const handleTagsChange = (e) => setTags(e.target.value);
-
-  // Handle adding question to Firestore
-  const handleAddQuestion = async () => {
-    if (!question || !tags) {
-      alert("Please fill in all fields.");
-      return;
-    }
-
-    setIsLoadingQuestion(true);
-
-    try {
-      await addDoc(collection(db, "questions"), {
-        title: question,
-        tags: tags.split(","),
-        votes: 0,
-        answers: 0,
-        date: new Date().toLocaleString(),
-        user: auth.currentUser?.email || "Anonymous", // Replace with logged-in user info
-      });
-
-      setQuestion("");
-      setTags("");
-      alert("Question added successfully!");
-    } catch (error) {
-      console.error("Error adding question:", error.message);
-      alert("Failed to add question.");
-    } finally {
-      setIsLoadingQuestion(false);
-    }
-  };
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br mt-20 from-blue-500 to-purple-600">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
-          Welcome to Your Dashboard
-        </h1>
-
+        <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">Welcome to Your Dashboard</h1>
+        
         {/* User Info Section */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
@@ -94,7 +54,7 @@ const Dashboard = () => {
               {editing ? "Save" : "Edit"}
             </button>
           </div>
-
+          
           <div className="space-y-6">
             {/* Name Field */}
             <div>
@@ -108,7 +68,7 @@ const Dashboard = () => {
                 className="w-full border border-gray-300 rounded-md px-4 py-2 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
               />
             </div>
-
+            
             {/* Email Field */}
             <div>
               <label className="block text-gray-700">Email</label>
@@ -121,7 +81,7 @@ const Dashboard = () => {
                 className="w-full border border-gray-300 rounded-md px-4 py-2 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
               />
             </div>
-
+            
             {/* Phone Field */}
             <div>
               <label className="block text-gray-700">Phone</label>
@@ -134,7 +94,7 @@ const Dashboard = () => {
                 className="w-full border border-gray-300 rounded-md px-4 py-2 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
               />
             </div>
-
+            
             {/* Address Field */}
             <div>
               <label className="block text-gray-700">Address</label>
@@ -148,32 +108,6 @@ const Dashboard = () => {
               />
             </div>
           </div>
-        </div>
-
-        {/* Add Question Section */}
-        <div className="mt-6">
-          <h2 className="text-2xl font-bold">Add a Question</h2>
-          <input
-            type="text"
-            placeholder="Your question"
-            value={question}
-            onChange={handleQuestionChange}
-            className="border p-2 rounded w-full mt-4"
-          />
-          <input
-            type="text"
-            placeholder="Tags (comma-separated)"
-            value={tags}
-            onChange={handleTagsChange}
-            className="border p-2 rounded w-full mt-4"
-          />
-          <button
-            onClick={handleAddQuestion}
-            className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
-            disabled={isLoadingQuestion}
-          >
-            {isLoadingQuestion ? "Adding..." : "Add Question"}
-          </button>
         </div>
 
         {/* Logout Button */}
