@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { logIn } from "../utils/auth";
 import { FaArrowRight } from "react-icons/fa";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -9,14 +10,14 @@ const LoginForm = () => {
   const [success, setSuccess] = useState("");
   const [captcha, setCaptcha] = useState("");
   const [userInput, setUserInput] = useState("");
+  const navigate = useNavigate(); // Initialize navigate
 
   useEffect(() => {
     generateCaptcha();
   }, []);
 
   const generateCaptcha = () => {
-    const chars =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let captchaString = "";
     for (let i = 0; i < 6; i++) {
       captchaString += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -38,6 +39,7 @@ const LoginForm = () => {
     const result = await logIn(email, password);
     if (result.success) {
       setSuccess("Login successful!");
+      navigate("/"); // Redirect to home page on success
     } else {
       setError(result.error);
     }
@@ -45,7 +47,6 @@ const LoginForm = () => {
 
   return (
     <div className="flex items-center justify-center h-screen ">
-      {" "}
       <div className="relative flex flex-col md:flex-row w-full md:w-4/5 bg-white rounded-lg shadow-lg gap-6 p-4">
         {/* Left Content Section */}
         <div
@@ -57,13 +58,8 @@ const LoginForm = () => {
             backgroundRepeat: "no-repeat",
           }}
         >
-          <h2 className="text-3xl font-bold mb-4">
-            Empowering Minds, Shaping Futures
-          </h2>
-          <p className="mb-8">
-            Unlock your potential with expert coaching, comprehensive courses,
-            and personalized learning.
-          </p>
+          <h2 className="text-3xl font-bold mb-4">Empowering Minds, Shaping Futures</h2>
+          <p className="mb-8">Unlock your potential with expert coaching, comprehensive courses, and personalized learning.</p>
         </div>
 
         {/* Right Form Section */}
@@ -80,9 +76,7 @@ const LoginForm = () => {
             }}
           ></div>
 
-          <h3 className="text-xl text-black flex justify-center font-bold mb-2">
-            Login
-          </h3>
+          <h3 className="text-xl text-black flex justify-center font-bold mb-2">Login</h3>
 
           {error && <p className="text-red-500 text-center">{error}</p>}
           {success && <p className="text-green-500 text-center">{success}</p>}
@@ -90,12 +84,7 @@ const LoginForm = () => {
           {/* Login Form */}
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label
-                className="block mb-2 text-black text-[15px]"
-                htmlFor="email"
-              >
-                Email
-              </label>
+              <label className="block mb-2 text-black text-[15px]" htmlFor="email">Email</label>
               <input
                 className="w-full border text-gray-800 border-gray-400 rounded-md px-3 py-2"
                 id="email"
@@ -108,12 +97,7 @@ const LoginForm = () => {
             </div>
 
             <div className="mb-4 relative">
-              <label
-                className="block text-black mb-2 text-[15px]"
-                htmlFor="password"
-              >
-                Password
-              </label>
+              <label className="block text-black mb-2 text-[15px]" htmlFor="password">Password</label>
               <input
                 className="w-full border text-gray-700 border-gray-400 rounded-md px-3 py-2"
                 id="password"
@@ -128,9 +112,7 @@ const LoginForm = () => {
             {/* CAPTCHA Section */}
             <div className="mb-4 flex space-x-4">
               <div className="w-1/2">
-                <label className="block text-black" htmlFor="captcha">
-                  Captcha
-                </label>
+                <label className="block text-black" htmlFor="captcha">Captcha</label>
                 <input
                   className="w-full border text-gray-800 border-gray-400 rounded-md px-3 py-2"
                   id="captcha"
@@ -140,9 +122,7 @@ const LoginForm = () => {
                 />
               </div>
               <div className="w-1/2">
-                <label className="block text-black" htmlFor="reenter-captcha">
-                  Enter Captcha
-                </label>
+                <label className="block text-black" htmlFor="reenter-captcha">Enter Captcha</label>
                 <input
                   className="w-full border text-gray-700 border-gray-400 rounded-md px-3 py-2"
                   id="reenter-captcha"
@@ -172,11 +152,7 @@ const LoginForm = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   >
-                    <path
-                      d="M6 6 A9 9 0 1 1 7 20"
-                      className="stroke-current font-thin text-white"
-                      fill="none"
-                    />
+                    <path d="M6 6 A9 9 0 1 1 7 20" className="stroke-current font-thin text-white" fill="none" />
                   </svg>
                   <FaArrowRight className="text-white h-4 relative right-1 z-10" />
                 </div>
