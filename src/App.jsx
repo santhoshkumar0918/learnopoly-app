@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <div className="">
-        <Header />
+        
         <main className="container mx-auto p-8">
           <Routes>
             <Route path="/" element={<Home />} />

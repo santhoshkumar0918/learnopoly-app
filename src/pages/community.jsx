@@ -1,6 +1,5 @@
-
 import React, { useState } from "react";
-import { db, auth } from "../firebase/firebaseConfig"; // Assuming you have firebase setup
+import { db, auth } from "../firebase/firebaseConfig"; 
 import { collection, addDoc } from "firebase/firestore";
 
 function Community() {
@@ -10,16 +9,12 @@ function Community() {
   const [searchTerm, setSearchTerm] = useState(""); 
   const [discussions, setDiscussions] = useState([]);
 
-
   const handleSearchChange = (e) => setSearchTerm(e.target.value);
 
-  // Handle change in question input
   const handleQuestionChange = (e) => setQuestion(e.target.value);
 
-  // Handle change in tags input
   const handleTagsChange = (e) => setTags(e.target.value);
 
-  // Handle adding question to Firestore
   const handleAddQuestion = async () => {
     if (!question || !tags) {
       alert("Please fill in all fields.");
@@ -31,14 +26,13 @@ function Community() {
     try {
       await addDoc(collection(db, "questions"), {
         title: question,
-        tags: tags.split(",").map((tag) => tag.trim()), // Splitting and trimming tags
+        tags: tags.split(",").map((tag) => tag.trim()), 
         votes: 0,
         answers: 0,
         date: new Date().toLocaleString(),
-        user: auth.currentUser?.email || "Anonymous", // Replace with logged-in user info
+        user: auth.currentUser?.email || "Anonymous", 
       });
 
-      // Optionally update the local state with the new question (to avoid reload)
       setDiscussions([
         {
           title: question,
@@ -51,7 +45,6 @@ function Community() {
         ...discussions,
       ]);
 
-      // Clear the form after submission
       setQuestion("");
       setTags("");
       alert("Question added successfully!");
@@ -63,52 +56,45 @@ function Community() {
     }
   };
 
-  // Filter discussions based on search term
   const filteredDiscussions = discussions.filter((discussion) =>
     discussion.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className="p-4 bg-gray-50 min-h-screen">
-      <h1 className="text-2xl font-bold mb-6">Q&A Discussions</h1>
+    <div className="min-h-screen bg-gray-100 p-6">
+      <h1 className="text-3xl font-semibold text-center text-gray-800 mb-8">Q&A Discussions</h1>
       
       {/* Search Bar */}
-      <div className="mb-4">
+      <div className="flex justify-center mb-6">
         <input
           type="text"
-          placeholder="Search..."
-          className="border p-2 rounded w-full max-w-md mb-2"
+          placeholder="Search questions..."
+          className="border border-gray-300 p-3 rounded-xl w-full max-w-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={searchTerm}
           onChange={handleSearchChange}
         />
-        <button
-          onClick={() => console.log("Ask a question clicked")}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Ask a question
-        </button>
       </div>
 
       {/* Add Question Section */}
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold mb-2">Ask a Question</h2>
+      <div className="bg-white p-6 rounded-xl shadow-md mb-8">
+        <h2 className="text-xl font-semibold text-gray-700 mb-4">Ask a Question</h2>
         <input
           type="text"
           placeholder="Your question"
           value={question}
           onChange={handleQuestionChange}
-          className="border p-2 rounded w-full mt-4"
+          className="border border-gray-300 p-3 rounded-xl w-full mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <input
           type="text"
           placeholder="Tags (comma-separated)"
           value={tags}
           onChange={handleTagsChange}
-          className="border p-2 rounded w-full mt-4"
+          className="border border-gray-300 p-3 rounded-xl w-full mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <button
           onClick={handleAddQuestion}
-          className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+          className={`w-full p-3 rounded-xl text-white ${isLoadingQuestion ? 'bg-gray-400' : 'bg-blue-600'} hover:bg-blue-700 focus:outline-none transition-colors`}
           disabled={isLoadingQuestion}
         >
           {isLoadingQuestion ? "Adding..." : "Add Question"}
@@ -117,24 +103,23 @@ function Community() {
 
       {/* List of Discussions */}
       {filteredDiscussions.map((discussion, index) => (
-        <div key={index} className="bg-white p-4 rounded shadow mb-4">
-          <div className="flex justify-between">
-            <h2 className="font-semibold">{discussion.title}</h2>
-            <span className="text-gray-400">{discussion.date}</span>
+        <div key={index} className="bg-white p-6 rounded-xl shadow-md mb-6">
+          <div className="flex justify-between mb-3">
+            <h2 className="text-lg font-semibold text-gray-800">{discussion.title}</h2>
+            <span className="text-sm text-gray-500">{discussion.date}</span>
           </div>
-          <div className="flex items-center space-x-2 mt-2">
+          <div className="flex flex-wrap gap-2 mb-4">
             {discussion.tags.map((tag, idx) => (
-              <span key={idx} className="text-xs bg-gray-200 p-1 rounded">
+              <span key={idx} className="text-xs bg-blue-100 text-blue-600 px-3 py-1 rounded-full">
                 {tag}
               </span>
             ))}
           </div>
-          <div className="flex justify-between items-center mt-4">
-            <div className="flex items-center space-x-4">
-              <span>{discussion.votes} Votes</span>
-              <span>{discussion.answers} Answers</span>
+          <div className="flex justify-between items-center">
+            <div className="text-sm text-gray-500">
+              <span>{discussion.votes} Votes</span> | <span>{discussion.answers} Answers</span>
             </div>
-            <span className="text-gray-500">{discussion.user}</span>
+            <span className="text-sm text-gray-500">{discussion.user}</span>
           </div>
         </div>
       ))}
