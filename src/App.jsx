@@ -8,11 +8,12 @@ import Signup from "./pages/Signup";
 import Community from "./pages/community";
 import Dashboard from "./pages/dashboard";
 import Header from "./pages/Header";
+import Feed from "./pages/Feed";
 
 function App() {
   return (
     <Router>
-      <div className="">
+      <div className="w-full min-h-screen">
         
         <main className="container mx-auto p-8">
           <Routes>
@@ -21,6 +22,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/community" element={<Community />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/feed" element={<Feed />} />
           </Routes>
         </main>
       </div>

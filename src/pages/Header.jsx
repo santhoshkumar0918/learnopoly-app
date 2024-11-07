@@ -28,6 +28,9 @@ const Header = () => {
               <Link to="/community">Community-Talks</Link>
             </li>
             <li className="text-[18px] cursor-pointer font-bold hover:text-red-400 transition-all duration-200">
+              <Link to="/feed">EXPLORER</Link>
+            </li>
+            <li className="text-[18px] cursor-pointer font-bold hover:text-red-400 transition-all duration-200">
               <Link to="/login">Login</Link>
             </li>
             <li className="text-[18px] cursor-pointer font-bold hover:text-red-400 transition-all duration-200">
