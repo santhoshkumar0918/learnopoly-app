@@ -171,6 +171,7 @@ import React, { useState, useEffect } from "react";
 import { logIn } from "../utils/auth";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import Header from "../pages/Header";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -220,6 +221,8 @@ const LoginForm = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="flex items-center justify-center h-screen">
       <div className="relative flex flex-col md:flex-row w-full md:w-4/5 bg-white rounded-lg shadow-lg gap-6 p-4">
         {/* Left Content Section */}
@@ -336,6 +339,7 @@ const LoginForm = () => {
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { db, auth } from "../firebase/firebaseConfig"; 
 import { collection, addDoc } from "firebase/firestore";
+import Header from "./Header";
 
 function Community() {
   const [question, setQuestion] = useState("");
@@ -61,7 +62,9 @@ function Community() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div>
+      <Header />
+    <div className="min-h-screen bg-gray-100 mt-20 p-6">
       <h1 className="text-3xl font-semibold text-center text-gray-800 mb-8">Q&A Discussions</h1>
       
       {/* Search Bar */}
@@ -123,6 +126,7 @@ function Community() {
           </div>
         </div>
       ))}
+    </div>
     </div>
   );
 }
