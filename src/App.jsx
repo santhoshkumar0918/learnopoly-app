@@ -13,7 +13,7 @@ import Feed from "./pages/Feed";
 function App() {
   return (
     <Router>
-      <div className="w-full min-h-screen">
+      <div className="">
         
         <main className="container mx-auto p-8">
           <Routes>

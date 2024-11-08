@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { db, auth } from "../firebase/firebaseConfig"; 
+// import { db, auth } from "../firebase/firebaseConfig"; 
 import { collection, addDoc } from "firebase/firestore";
 import Header from "./Header";
+import { db } from "../firebase/firebaseConfig";
+import { auth } from "../firebase/firebaseConfig";
 
 function Community() {
   const [question, setQuestion] = useState("");
