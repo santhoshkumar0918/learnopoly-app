@@ -48,6 +48,10 @@ Key Features
         Peer-to-Peer Learning Communities: Unlike typical online learning platforms, Learnopoly fosters community-driven learning by enabling users to form study groups, share notes, discuss concepts, and collaborate on projects in real time.
         AI-Powered Study Guide: The platform uses AI to create personalized study guides based on the user’s learning history and goals, helping them focus on areas needing improvement and accelerating their path to mastery.
 
+
+        Web3 Enthusiasts:
+            For Web3 enthusiasts, Learnopoly offers decentralized ID verification and transaction capabilities within a dApp environment, with plans to expand Web3 functionalities in the future.
+
     Engagement and Gamification
         Challenges and Quizzes: To keep users engaged, Learnopoly hosts coding challenges, quizzes, and tech competitions. These interactive elements make learning enjoyable and provide real-world scenarios to apply new skills.
         Achievements and Rewards: Users earn badges, certificates, and rewards for completing courses, attending events, and contributing to discussions. Rewards are integrated with gamified levels, giving users a sense of progression and accomplishment.
