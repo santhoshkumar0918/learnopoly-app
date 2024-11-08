@@ -28,7 +28,13 @@ const SignupForm = () => {
   return (
     <div>
       <Header/>
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-500 to-blue-500">
+    <div className="min-h-screen flex items-center justify-center "
+     
+     style={{
+       backgroundImage: "url('/images/logo1.jpeg')",
+       backgroundSize: "cover",
+       backgroundPosition: "center",
+     }}>
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
         <h2 className="text-4xl font-semibold text-center mb-6 text-gray-800">
           Create Account
